@@ -1,0 +1,11 @@
+.widget {
+  width: 400px;
+  height: 250px;
+  border: 1px solid grey;
+  margin: 20px;
+}
+
+.widget h3 {
+  padding-left: 10px;
+  border-bottom: 1px solid grey;
+}

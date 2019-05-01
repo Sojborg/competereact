@@ -1,13 +1,5 @@
 import React from "react";
-
-interface IWorkout {  
-  id: number,
-  type: string,
-  length: number,
-  durationHour: number,
-  durationMin: number,
-  durationSec: number
-}
+import { IWorkout } from "./IWorkout";
 
 interface IWorkoutContext {
   workouts: IWorkout[],
@@ -25,7 +17,7 @@ export class WorkoutProvider extends React.Component {
   }
 
   async componentDidMount() {
-    const res = await fetch('./fake-workouts.json');
+    const res = await fetch('/fake-workouts.json');
     const workouts = await res.json();
 
     this.setState({workouts});
@@ -35,9 +27,10 @@ export class WorkoutProvider extends React.Component {
     return this.state.workouts.filter(w => w.id === id)[0];
   }
 
-  addWorkout = (workout: IWorkout) =>  {
+  addWorkout = (workout: IWorkout): Promise<boolean> => {
     const newWorkoutList = [...this.state.workouts, workout];
     this.setState({workouts: newWorkoutList});
+    return Promise.resolve(true);
   }
 
   removeWorkout = (workout: IWorkout) => {

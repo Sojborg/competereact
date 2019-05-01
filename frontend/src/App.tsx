@@ -5,21 +5,24 @@ import { Workouts } from './Workout/Workouts';
 import { DashbordProvider } from './Dashboard/DashboardProvider';
 import { Dashboard } from './Dashboard/Dashboard';
 import { Menu } from './Menu/Menu';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { Router as Router, Route } from 'react-router-dom';
 import { Workout } from './Workout/Workout';
+import history from './History';
 
 class App extends Component {
   render() {
     return (
-      <Router>
+      <Router history={history}>
         <div>
           <WorkoutProvider>
             <DashbordProvider>
               <Menu />
               <Route path="/" exact component={Dashboard} />
-              <Route path="/workouts/" component={Workouts} />
-              <Route path="/workout/:id" component={Workout} />
-              <Route path="/workout/" component={Workout} />
+              <Route exact={true} path="/workouts/" component={Workouts} />
+              <Route path="/workout/:id" render={props => (
+                  <Workout id={props.match.params.id} />
+              )} />
+              <Route exact path="/workout" component={Workout} />
             </DashbordProvider>
           </WorkoutProvider>
         </div>

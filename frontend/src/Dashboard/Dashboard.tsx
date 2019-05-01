@@ -1,25 +1,49 @@
-import React from "react";
+import React, { useState } from "react";
 import { DashboardContext } from "./DashboardProvider";
-import { Widget } from "./Widgets/Widget";
 import "./Dashboard.css";
+import { WorkoutsWidget, LeaguesWidget } from "./Widgets";
 
-export class Dashboard extends React.Component {
+export function Dashboard() {
+  const [widgets, setWidgets] = useState(new Array<React.ReactChild>(
+    <WorkoutsWidget />,
+    <LeaguesWidget />      
+  ));
 
-  public render() {
-    return (
-      <div>
-      <DashboardContext.Consumer>
-        {({widgets}) => (
-        <div className='dashboard'>
-          {
-            widgets.map(widget => {
-              return widget
-            })
-          }
-        </div>
-        )}
-      </DashboardContext.Consumer>
+  return (
+    <div>
+    <DashboardContext.Consumer>
+      {({widgets}) => (
+      <div className='dashboard'>
+        {
+          widgets.map(widget => {
+            return widget
+          })
+        }
       </div>
-    )
-  }
+      )}
+    </DashboardContext.Consumer>
+    </div>
+  )
 }
+
+
+// export class Dashboard extends React.Component {
+
+//   public render() {
+//     return (
+//       <div>
+//       <DashboardContext.Consumer>
+//         {({widgets}) => (
+//         <div className='dashboard'>
+//           {
+//             widgets.map(widget => {
+//               return widget
+//             })
+//           }
+//         </div>
+//         )}
+//       </DashboardContext.Consumer>
+//       </div>
+//     )
+//   }
+// }

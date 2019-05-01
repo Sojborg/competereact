@@ -1,25 +1,26 @@
-import React from "react";
+import React, { useContext } from "react";
 import { WorkoutContext } from "./WorkoutProvider";
 import { Link } from "react-router-dom";
+import { IWorkout } from "./IWorkout";
 
-export class Workouts extends React.Component {
+export function Workouts () {
+  const workoutContext = useContext(WorkoutContext);
+  const workouts = workoutContext.workouts; 
 
-  public render() {
-    return (
-      <WorkoutContext.Consumer>
-        {({ workouts, add, removeWorkout }) => (
-          <div>
-            <Link to="/workout/">Create workout</Link>
-            <ul>
-              {workouts.map((workout, index) => {
-                return <li key={index}>{workout.id} - {workout.type} - <button onClick={() => removeWorkout(workout)}>X</button></li>
-              })
-              }
-            </ul>
-          </div>
-        )}
-      </WorkoutContext.Consumer>
-    )
+  const removeWorkout = function(workout: IWorkout) {
+    workoutContext.removeWorkout(workout);
   }
 
+  return (
+      <div>
+        <Link to="/workout/">Create workout</Link>
+        <ul>
+          {workouts.map((workout: IWorkout, index) => {
+            const url = `/workout/${workout.id}`;
+            return <li key={index}><Link to={url}> {workout.id} - {workout.type}</Link> - <button onClick={() => removeWorkout(workout)}>X</button></li>
+          })
+          }
+        </ul>
+      </div>
+  )
 }
